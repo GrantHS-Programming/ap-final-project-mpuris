@@ -186,21 +186,26 @@ public class nyt implements ActionListener{
 
     }
     String[][] nums = new String[4][4];
+    //int num = (int) (Math.random()*4)+2;
+    int num = 1;
+    String[][] one = {{"COLLAPSE", "WAVE", "SEA", "GIVE"},
+            {"CAVE", "DANCE", "FLOP", "MASS"},
+            {"BUCKLE", "SNAP", "WHISTLE", "TON"}
+            ,         {"BUTTON", "SHOUT","SLEW", "LAUGH"}};
+    String[][] two = {{" JELLY BEAN ", " LOUNGE ", " FELLOW ", " BUNNY "}, {" PEER ", " PARTNER ", " LIBRARY ", " EGG "}, {" SPY ", " HALL ", " PEEP ",
+            " BIRTHMARK "}, {" ASSOCIATE ", " STUDY "," ANIMAL ", " UNIT "}};
+    String[][] three = {{" CHANNEL ", " OUTSIDE ", " VEHICLE ", " STYLES "}, {" LARGE ", " SWIFT ", " MEDIUM ", " GRANDE "}, {" MARS ", " REMOTE ", " LEGEND ",
+            " SLIM "}, {" MEANS ", " ROOM "," PROOF ", " SMALL "}};
+    String[][] four = {{" COMPLAINT ", " WINDSOCK ", " CLAIM ", " RUNWAY "}, {" FOXGLOVE ", " HANGAR ", " TURNCOAT ", " LAWSUIT "}, {" RING ", " ACTION ",
+            "TORCH", "CLUB"}, {"BEANBAG", "GUMSHOE","TARMAC", "TERMINAL"}};
+    String[][] five = {{"TOE", "PIPE", "COLLECTIVE", "DRAIN"}, {"LUCID", "CIGARETTE", "TICKET", "MUTUAL"}, {"CLEAR", "FEVER",
+            "EMPTY", "FLUSH"}, {"PENCIL", "AMERICAN","JOINT", "COMMON"}};
     public void connections(){
 
-        String[][] one = {{"COLLAPSE", "WAVE", "SEA", "GIVE"}, {"CAVE", "DANCE", "FLOP", "MASS"}, {"BUCKLE", "SNAP", "WHITLE", "TON"}
-                , {"BUTTON", "SHOUT","SLEW", "LAUGH"}};
-        String[][] two = {{" JELLY BEAN ", " LOUNGE ", " FELLOW ", " BUNNY "}, {" PEER ", " PARTNER ", " LIBRARY ", " EGG "}, {" SPY ", " HALL ", " PEEP ",
-                " BIRTHMARK "}, {" ASSOCIATE ", " STUDY "," ANIMAL ", " UNIT "}};
-        String[][] three = {{" CHANNEL ", " OUTSIDE ", " VEHICLE ", " STYLES "}, {" LARGE ", " SWIFT ", " MEDIUM ", " GRANDE "}, {" MARS ", " REMOTE ", " LEGEND ",
-                " SLIM "}, {" MEANS ", " ROOM "," PROOF ", " SMALL "}};
-        String[][] four = {{" COMPLAINT ", " WINDSOCK ", " CLAIM ", " RUNWAY "}, {" FOXGLOVE ", " HANGAR ", " TURNCOAT ", " LAWSUIT "}, {" RING ", " ACTION ",
-                "TORCH", "CLUB"}, {"BEANBAG", "GUMSHOE","TARMAC", "TERMINAL"}};
-        String[][] five = {{"TOE", "PIPE", "COLLECTIVE", "DRAIN"}, {"LUCID", "CIGARETTE", "TICKET", "MUTUAL"}, {"CLEAR", "FEVER",
-                "EMPTY", "FLUSH"}, {"PENCIL", "AMERICAN","JOINT", "COMMON"}};
+
         int row = 4;
         int col = 4;
-        int num = (int) (Math.random()*4)+2;
+
         for(int x= 0; x<row; x++){
             for(int y = 0; y<col; y++)
                 if(num == 1){
@@ -227,10 +232,11 @@ public class nyt implements ActionListener{
         }
 
     }
-
+    int count = 0;
+    int n = -1;
+    int y = 0;
     @Override
     public void actionPerformed(ActionEvent e) {
-        int count = 0;
         for (int row = 0; row < board.length; row++) {
             for (int col = 0; col < board[0].length; col++) {
 
@@ -246,17 +252,132 @@ public class nyt implements ActionListener{
         }
 
         if(e.getSource()==resetButton){
-            for (int row = 0; row < board.length; row++) {
-                for (int col = 0; col < board[0].length; col++) {
-                    if(!board[row][col].isEnabled() && count==4){
+            if(num==1&& !( board[0][2].isEnabled() || board[1][3].isEnabled() || board[3][2].isEnabled() || board[2][3].isEnabled())
+                    || !(board[0][0].isEnabled() || board[0][3].isEnabled() || board[1][0].isEnabled() || board[2][0].isEnabled())
+                    || !(board[0][1].isEnabled() || board[2][1].isEnabled() || board[2][2].isEnabled() || board[3][1].isEnabled())
+                    || !(board[1][1].isEnabled() || board[1][2].isEnabled() || board[3][3].isEnabled() || board[3][0].isEnabled())) {
+                n++;
+                if (n == 0) {
+                    int g = 0;
+                    for (int row = 0; row < board.length; row++) {
+                        for (int col = 0; col < board[0].length; col++) {
+                            if(!board[row][col].isEnabled()){
+                                board[row][col].setEnabled(true);
+                                String h = one[row][col];
+                                String j = one[0][g];
+                                board[0][g].setText(h);
+                                board[row][col].setText(j);
+                                g++;
+                            }
+
+                        }
+                    }
+                    for(int r = 0; r <4; r++){
+                        board[0][r].setBackground(Color.GREEN);
+                        board[0][r].setOpaque(true);
+                        board[0][r].setEnabled(false);
+                    }
 
 
+                }
+                else if(n==1 && board[0][0].isEnabled()){
+                    int g = 0;
+                    for (int row = 0; row < board.length; row++) {
+                        for (int col = 0; col < board[0].length; col++) {
+                            if(!board[row][col].isEnabled()){
+                                board[row][col].setEnabled(true);
+                                String h = one[row][col];
+                                String j = one[1][g];
+                                board[1][g].setText(h);
+                                board[row][col].setText(j);
+                                g++;
+                            }
+
+                        }
+                    }
+                    for(int c = 0; c <4; c++){
+                        board[1][c].setBackground(Color.YELLOW);
+                        board[1][c].setOpaque(true);
+                        board[1][c].setEnabled(false);
+                    }
+
+
+                }
+                else if(n==2 && board[0][0].isEnabled()&& board[1][1].isEnabled()){
+                    int g = 0;
+                    for (int row = 0; row < board.length; row++) {
+                        for (int col = 0; col < board[0].length; col++) {
+                            if(!board[row][col].isEnabled()){
+                                board[row][col].setEnabled(true);
+                                String h = one[row][col];
+                                String j = one[2][g];
+                                board[2][g].setText(h);
+                                board[row][col].setText(j);
+                                g++;
+                            }
+
+                        }
+                    }
+                    for(int c = 0; c <4; c++){
+                        board[2][c].setBackground(Color.BLUE);
+                        board[2][c].setOpaque(true);
+                        board[2][c].setEnabled(false);
+                    }
+
+
+
+                }
+                else if(n==3 && board[0][0].isEnabled()&& board[1][0].isEnabled()&& board[2][0].isEnabled()){
+                    int g = 0;
+                    for (int row = 0; row < board.length; row++) {
+                        for (int col = 0; col < board[0].length; col++) {
+                            if(!board[row][col].isEnabled()){
+                                board[row][col].setEnabled(true);
+                                String h = one[row][col];
+                                String j = one[2][g];
+                                board[3][g].setText(h);
+                                board[row][col].setText(j);
+                                g++;
+                            }
+
+                        }
+                    }
+                    for(int c = 0; c <4; c++){
+                        board[3][c].setBackground(Color.PINK);
+                        board[3][c].setOpaque(true);
+                        board[3][c].setEnabled(false);
+                    }
+
+                }
+                else{
+                for(int row = 0; row < board.length; row++) {
+                    for (int col = 0; col < board[0].length; col++) {
+                        if (!board[row][col].isEnabled()) {
+                            board[row][col].setEnabled(true);
+                        }
+                    }
+                }
+
+                }
+
+
+                count = 0;
+            }
+        for (int row = 0; row < board.length; row++) {
+            for (int col = 0; col < board[0].length; col++) {
+                if (!board[row][col].isEnabled()) {
+                    y++;
+                    if (y == 16) {
+                        f.show();
                     }
                 }
 
             }
+
+
         }
 
+        }
     }
 }
 
