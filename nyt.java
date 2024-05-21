@@ -256,44 +256,42 @@ public class nyt implements ActionListener{
             }
         }
 
-        //!( board[0][2].isEnabled() || board[1][3].isEnabled() || board[3][2].isEnabled() || board[2][3].isEnabled())|| !(board[0][0].isEnabled() || board[0][3].isEnabled() || board[1][0].isEnabled() || board[2][0].isEnabled())|| !(board[0][1].isEnabled() || board[2][1].isEnabled() || board[2][2].isEnabled() || board[3][1].isEnabled())|| !(board[1][1].isEnabled() || board[1][2].isEnabled() || board[3][3].isEnabled() || board[3][0].isEnabled())
+
         if(e.getSource()==resetButton){
             ArrayList<String> q = new ArrayList<String>();
             if(num==1) {
-                for(int y = 0; y<board.length;y++){
-                    for(int x = 0; x<board[0].length; x++){
-                        if(!board[y][x].isEnabled()){
+                for (int y = w; y < board.length; y++) {
+                    for (int x = 0; x < board[0].length; x++) {
+                        if (!board[y][x].isEnabled()) {
                             q.add(board[y][x].getText());
                         }
                     }
                 }
+                System.out.println(q);
 
-                if(amount.contains(q.get(0))&&amount.contains(q.get(1))&&amount.contains(q.get(2))&&amount.contains(q.get(3))){
-                    n=2;
+                if (amount.contains(q.get(0)) && amount.contains(q.get(1)) && amount.contains(q.get(2)) && amount.contains(q.get(3))) {
+                    n = 2;
                 }
-                if(belly.contains(q.get(0))&&belly.contains(q.get(1))&&belly.contains(q.get(2))&&belly.contains(q.get(3))){
-                    n=3;
+                if (belly.contains(q.get(0)) && belly.contains(q.get(1)) && belly.contains(q.get(2)) && belly.contains(q.get(3))) {
+                    n = 3;
                 }
-                if(attention.contains(q.get(0))&&attention.contains(q.get(1))&&attention.contains(q.get(2))&&attention.contains(q.get(3))){
-                    n=1;
+                if (attention.contains(q.get(0)) && attention.contains(q.get(1)) && attention.contains(q.get(2)) && attention.contains(q.get(3))) {
+                    n = 1;
                 }
-                if(fall.contains(q.get(0))&&fall.contains(q.get(1))&&fall.contains(q.get(2))&&fall.contains(q.get(3))){
-                    n=0;
+                if (fall.contains(q.get(0)) && fall.contains(q.get(1)) && fall.contains(q.get(2)) && fall.contains(q.get(3))) {
+                    n = 0;
                 }
-
+            }
+            System.out.println(n);
                 if (n == 0) {
                     int g = 0;
-                    for (int row = 0; row < board.length; row++) {
+                    for (int row = w; row < board.length; row++) {
                         for (int col = 0; col < board[0].length; col++) {
                             if(!board[row][col].isEnabled()){
                                 board[row][col].setEnabled(true);
-                                String j = one[w][g];
-                                System.out.println("ONE w/g--->" + j + "   w: " + w + "   g: " + g);
-                                String h = one[row][col];
-                                System.out.println("ONE row/col---->" + h);
-
+                                String j = board[w][g].getText();
+                                String h = board[row][col].getText();
                                 board[row][col].setText(j);
-                                System.out.println("REPLACED TEXT---->" + board[row][col].getText() + " row: " + row + "    col: " + col);
                                 board[w][g].setText(h);
                                 g++;
                             }
@@ -311,12 +309,12 @@ public class nyt implements ActionListener{
                 }
                 else if(n==1){
                     int g = 0;
-                    for (int row = 0; row < board.length; row++) {
+                    for (int row = w; row < board.length; row++) {
                         for (int col = 0; col < board[0].length; col++) {
                             if(!board[row][col].isEnabled()){
                                 board[row][col].setEnabled(true);
-                                String h = one[row][col];
-                                String j = one[w][g];
+                                String h = board[row][col].getText();
+                                String j = board[w][g].getText();
                                 board[w][g].setText(h);
                                 board[row][col].setText(j);
                                 g++;
@@ -335,12 +333,12 @@ public class nyt implements ActionListener{
                 }
                 else if(n==2 ){
                     int g = 0;
-                    for (int row = 0; row < board.length; row++) {
+                    for (int row = w; row < board.length; row++) {
                         for (int col = 0; col < board[0].length; col++) {
                             if(!board[row][col].isEnabled()){
                                 board[row][col].setEnabled(true);
-                                String h = one[row][col];
-                                String j = one[w][g];
+                                String h = board[row][col].getText();
+                                String j = board[w][g].getText();
                                 board[w][g].setText(h);
                                 board[row][col].setText(j);
                                 g++;
@@ -360,12 +358,12 @@ public class nyt implements ActionListener{
                 }
                 else if(n==3){
                     int g = 0;
-                    for (int row = 0; row < board.length; row++) {
+                    for (int row = w; row < board.length; row++) {
                         for (int col = 0; col < board[0].length; col++) {
                             if(!board[row][col].isEnabled()){
                                 board[row][col].setEnabled(true);
-                                String h = one[row][col];
-                                String j = one[w][g];
+                                String h = board[row][col].getText();
+                                String j = board[w][g].getText();
                                 board[w][g].setText(h);
                                 board[row][col].setText(j);
                                 g++;
@@ -374,7 +372,7 @@ public class nyt implements ActionListener{
                         }
                     }
                     for(int c = 0; c <4; c++){
-                        board[w][c].setBackground(Color.RED);
+                        board[w][c].setBackground(new Color(200, 0, 200));
                         board[w][c].setOpaque(true);
                         board[w][c].setEnabled(false);
                     }
@@ -411,6 +409,6 @@ public class nyt implements ActionListener{
 
         }
     }
-}
+
 
 
