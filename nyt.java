@@ -265,7 +265,7 @@ public class nyt implements ActionListener{
             {" LARGE ", " SWIFT ", " MEDIUM ", " GRANDE "},
             {" MARS ", " REMOTE ", " LEGEND ", " SLIM "},
             {" MEANS ", " ROOM "," PROOF ", " SMALL "}};
-    String
+
     String[][] four = {{" COMPLAINT ", " WINDSOCK ", " CLAIM ", " RUNWAY "}, {" FOXGLOVE ", " HANGAR ", " TURNCOAT ", " LAWSUIT "}, {" RING ", " ACTION ",
             "TORCH", "CLUB"}, {"BEANBAG", "GUMSHOE","TARMAC", "TERMINAL"}};
     String[][] five = {{"TOE", "PIPE", "COLLECTIVE", "DRAIN"}, {"LUCID", "CIGARETTE", "TICKET", "MUTUAL"}, {"CLEAR", "FEVER",
