@@ -11,10 +11,13 @@ public class nyt implements ActionListener{
     final String RESET = "\u001b[0m";
     JFrame window = new JFrame("CONNECTIONS");
     JFrame game1 = new JFrame("WORDLE");
+    JFrame game2 = new JFrame("SPELLING BEE");
     JButton resetButton = new JButton("ENTER");
+
 
     JButton[][] board = new JButton[4][4];
     JButton[][] word = new JButton[6][5];
+    JButton[][] bee = new JButton[8][5];
     static JFrame f;
     static JFrame e;
 
@@ -46,15 +49,23 @@ public class nyt implements ActionListener{
         game1.setSize(800, 800);
         game1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        game2.setLayout(new BorderLayout());
+        game2.setSize(800, 800);
+        game2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         Container resetContainer = new Container();
         Container boardContainer = new Container();
         resetContainer.setLayout(new GridLayout(1, 1));
         boardContainer.setLayout(new GridLayout(4, 4));
 
-        Container enterContainer = new Container();
+
         Container wordContainer = new Container();
-        enterContainer.setLayout(new GridLayout(1, 1));
         wordContainer.setLayout(new GridLayout(6, 5));
+
+        Container enterContainer = new Container();
+        Container beeContainer = new Container();
+        enterContainer.setLayout(new GridLayout(1, 1));
+        beeContainer.setLayout(new GridLayout(8, 5));
 
         resetButton.addActionListener(this);
         resetContainer.add(resetButton);
@@ -77,15 +88,26 @@ public class nyt implements ActionListener{
 
             }
         }
+        for (int row = 0; row < bee.length; row++) {
+            for (int col = 0; col < bee[0].length; col++) {
+                bee[row][col] = new JButton();
+                bee[row][col].addActionListener(this);
+                beeContainer.add(bee[row][col]);
+
+            }
+        }
         window.add(resetContainer, BorderLayout.NORTH);
         window.add(boardContainer, BorderLayout.CENTER);
 
 
         game1.add(wordContainer, BorderLayout.CENTER);
 
+        game2.add(enterContainer, BorderLayout.NORTH);
+        game2.add(beeContainer, BorderLayout.CENTER);
+
 
         System.out.println("Welcome to the NYT mini games! Select from the eligible games listed to get started.");
-        System.out.println("Which game would you like to play? (1 or 2)");
+        System.out.println("Which game would you like to play? (1, 2 or 3)");
         System.out.println("1. WORDLE");
         System.out.println("2. SPELLING BEE");
         System.out.println("3. CONNECTIONS");
@@ -98,7 +120,9 @@ public class nyt implements ActionListener{
 
         }
         if(bla.equals("2")){
+            game2.setVisible(true);
             spellingBee();
+
         }
         if(bla.equals("3")){
             window.setVisible(true);
@@ -183,7 +207,8 @@ public class nyt implements ActionListener{
         System.out.println("exit the game simply type 'quit'. Good Luck!");
         ArrayList<Puzzle> game= new ArrayList<Puzzle>();
         int score = 0;
-        Puzzle one = new Puzzle("F A B E I L N", new String[]{"AFFABLE", "ALFALFA", "BAFFLE", "BAILIFF", "BEEF",
+        Puzzle one = new Puzzle("F A B E I L N", new String[]
+                {"AFFABLE", "ALFALFA", "BAFFLE", "BAILIFF", "BEEF",
                 "BEFALL", "BEFALLEN", "BEFELL", "BELIEF", "BIFF", "ELFIN", "ENFEEBLE", "FABLE", "FAIL", "FALAFEL",
                 "FALL", "FALLEN", "FALLIBLE", "FEEBLE", "FEEL", "FELINE", "FELL", "FELLA", "FENNEL", "FIEF", "FIFE",
                 "FILE", "FILIAL", "FILL", "FILLABLE", "FINAL", "FINALE", "FINE","FINIAL","FLAB", "FLAIL", "FLAN",
@@ -203,13 +228,16 @@ public class nyt implements ActionListener{
                 "O B F G L R U", "D A I M N O T", "L A D I T V Y", "E F K L M N O", "I F G H L T Y", "B A C D E N U" ,
                 "R A D K L O W", "O C G I N U V", "G A I L O R T", "D A B I L O R", "N D E I P U Z", "C A B K M O R"};
         int y = (int)(Math.random()*game.size());
+        if(y == 0){
+            JButton[][] bee = new JButton[8][5];
+        }
         String guess = "";
-        while(game.get(y).getArray().length> 0 && !guess.equals("QUIT")){
+        ArrayList<String> guesser= new ArrayList<String>();
+        while(game.get(y).getArray().length> 0 && !guess.equals("QUIT") && guesser.size()!=game.get(y).getArray().length){
             System.out.println(BG_YELLOW + game.get(y).getLetters().substring(0,1)+ RESET + game.get(y).getLetters().substring(1));
             Scanner sc = new Scanner(System.in);
             System.out.println("Please enter your word: ");
             guess = sc.nextLine().toUpperCase();
-            ArrayList<String> guesser= new ArrayList<String>();
             int a = 0;
             int b = 0;
             for(int i = 0; i<game.get(y).getArray().length;i++) {
@@ -219,24 +247,29 @@ public class nyt implements ActionListener{
 
                 }
             }
-            if(a==1){
-                score = score + game.get(y).getArray()[b].length();
-                System.out.println("+" + game.get(y).getArray()[b].length());
-                System.out.println("Total: " + score);
-            }
-            if(guesser.contains(guess)){
-                System.out.println("Word has already been used. Try again.");
-            }
-            if(a==0 && !guesser.contains(guess) && !guess.equals("QUIT")){
-                System.out.println("Not an eligible word. Try again.");
-            }
-            if(guess.equals("QUIT")){
-                System.out.println("Better luck next time!");
-            }
-            guesser.add(guess);
-            if(guesser.size() == game.get(y).getArray().length){
-                System.out.println("You have found all the possible words!");
-            }
+
+
+                if (a == 1) {
+                    score = score + game.get(y).getArray()[b].length();
+                    System.out.println("+" + game.get(y).getArray()[b].length());
+                    System.out.println("Total: " + score);
+                    guesser.add(guess);
+                }
+                else if (guesser.contains(guess)) {
+                    System.out.println("Word has already been used. Try again.");
+                }
+
+                else if (a == 0 && !guess.equals("QUIT")) {
+                    System.out.println("Not an eligible word. Try again.");
+                }
+                if (guess.equals("QUIT")) {
+                    System.out.println("Better luck next time!");
+                }
+
+                if (guesser.size() == game.get(y).getArray().length) {
+                    System.out.println("You have found all the possible words!");
+                }
+
         }
 
     }
@@ -265,11 +298,29 @@ public class nyt implements ActionListener{
             {" LARGE ", " SWIFT ", " MEDIUM ", " GRANDE "},
             {" MARS ", " REMOTE ", " LEGEND ", " SLIM "},
             {" MEANS ", " ROOM "," PROOF ", " SMALL "}};
+    String pop = "GRANDEMARSSTYLESSWIFT";
+    String method = "CHANNELMEANSMEDIUMVEHICLE";
+    String chance = "OUTSIDEREMOTESLIMSMALL";
+    String living = "LARGELEGENDPROOFROOM";
 
-    String[][] four = {{" COMPLAINT ", " WINDSOCK ", " CLAIM ", " RUNWAY "}, {" FOXGLOVE ", " HANGAR ", " TURNCOAT ", " LAWSUIT "}, {" RING ", " ACTION ",
-            "TORCH", "CLUB"}, {"BEANBAG", "GUMSHOE","TARMAC", "TERMINAL"}};
-    String[][] five = {{"TOE", "PIPE", "COLLECTIVE", "DRAIN"}, {"LUCID", "CIGARETTE", "TICKET", "MUTUAL"}, {"CLEAR", "FEVER",
-            "EMPTY", "FLUSH"}, {"PENCIL", "AMERICAN","JOINT", "COMMON"}};
+    String[][] four = {
+            {" COMPLAINT ", " WINDSOCK ", " CLAIM ", " RUNWAY "},
+            {" FOXGLOVE ", " HANGAR ", " TURNCOAT ", " LAWSUIT "},
+            {" RING ", " ACTION ", "TORCH", "CLUB"},
+            {"BEANBAG", "GUMSHOE","TARMAC", "TERMINAL"}};
+    String airport = "HANGARRUNWAYTARMACTERMINAL";
+    String legal = "ACTIONCLAIMCOMPLAINTLAWSUIT";
+    String juggle = "BEANBAGCLUBRINGTORCH";
+    String clothing = "FOXGLOVEGUMSHOETURNCOATWINDSOCK";
+    String[][] five = {
+            {"TOE", "PIPE", "COLLECTIVE", "DRAIN"},
+            {"LUCID", "CIGARETTE", "TICKET", "MUTUAL"},
+            {"CLEAR", "FEVER", "EMPTY", "FLUSH"},
+            {"PENCIL", "AMERICAN","JOINT", "COMMON"}};
+    String dream = "AMERICANFEVERLUCIDPIPE";
+    String shared = "COLLECTIVECOMMONJOINTMUTUAL";
+    String rid = "CLEARDRAINEMPTYFLUSH";
+    String stub = "CIGARETTEPENCILTICKETTOE";
     public void connections(){
 
         int row = 4;
@@ -368,7 +419,75 @@ public class nyt implements ActionListener{
                         n = 0;
                     }
                 }
-                System.out.println(n);
+                if(num == 3){
+                    for (int y = w; y < board.length; y++) {
+                        for (int x = 0; x < board[0].length; x++) {
+                            if (!board[y][x].isEnabled()) {
+                                q.add(board[y][x].getText());
+                            }
+                        }
+                    }
+                    System.out.println(q);
+
+                    if (living.contains(q.get(0)) && living.contains(q.get(1)) && living.contains(q.get(2)) && living.contains(q.get(3))) {
+                        n = 3;
+                    }
+                    if (chance.contains(q.get(0)) && chance.contains(q.get(1)) && chance.contains(q.get(2)) && chance.contains(q.get(3))) {
+                        n = 1;
+                    }
+                    if (method.contains(q.get(0)) && method.contains(q.get(1)) && method.contains(q.get(2)) && method.contains(q.get(3))) {
+                        n = 2;
+                    }
+                    if (pop.contains(q.get(0)) && pop.contains(q.get(1)) && pop.contains(q.get(2)) && pop.contains(q.get(3))) {
+                        n = 0;
+                    }
+                }
+                if(num == 4){
+                    for (int y = w; y < board.length; y++) {
+                        for (int x = 0; x < board[0].length; x++) {
+                            if (!board[y][x].isEnabled()) {
+                                q.add(board[y][x].getText());
+                            }
+                        }
+                    }
+                    System.out.println(q);
+
+                    if (clothing.contains(q.get(0)) && clothing.contains(q.get(1)) && clothing.contains(q.get(2)) && clothing.contains(q.get(3))) {
+                        n = 3;
+                    }
+                    if (juggle.contains(q.get(0)) && juggle.contains(q.get(1)) && juggle.contains(q.get(2)) && juggle.contains(q.get(3))) {
+                        n = 1;
+                    }
+                    if (legal.contains(q.get(0)) && legal.contains(q.get(1)) && legal.contains(q.get(2)) && legal.contains(q.get(3))) {
+                        n = 2;
+                    }
+                    if (airport.contains(q.get(0)) && airport.contains(q.get(1)) && airport.contains(q.get(2)) && airport.contains(q.get(3))) {
+                        n = 0;
+                    }
+                }
+                if(num == 5){
+                    for (int y = w; y < board.length; y++) {
+                        for (int x = 0; x < board[0].length; x++) {
+                            if (!board[y][x].isEnabled()) {
+                                q.add(board[y][x].getText());
+                            }
+                        }
+                    }
+                    System.out.println(q);
+
+                    if (dream.contains(q.get(0)) && dream.contains(q.get(1)) && dream.contains(q.get(2)) && dream.contains(q.get(3))) {
+                        n = 3;
+                    }
+                    if (stub.contains(q.get(0)) && stub.contains(q.get(1)) && stub.contains(q.get(2)) && stub.contains(q.get(3))) {
+                        n = 1;
+                    }
+                    if (rid.contains(q.get(0)) && rid.contains(q.get(1)) && rid.contains(q.get(2)) && rid.contains(q.get(3))) {
+                        n = 2;
+                    }
+                    if (shared.contains(q.get(0)) && shared.contains(q.get(1)) && shared.contains(q.get(2)) && shared.contains(q.get(3))) {
+                        n = 0;
+                    }
+                }
                 if (n == 0) {
                     int g = 0;
                     for (int row = w; row < board.length; row++) {
