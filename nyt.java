@@ -12,12 +12,14 @@ public class nyt implements ActionListener{
     JFrame window = new JFrame("CONNECTIONS");
     JFrame game1 = new JFrame("WORDLE");
     JFrame game2 = new JFrame("SPELLING BEE");
+    JFrame begin = new JFrame("NYT MINI GAMES");
     JButton resetButton = new JButton("ENTER");
-
+    JButton[][] bee;
 
     JButton[][] board = new JButton[4][4];
     JButton[][] word = new JButton[6][5];
-    JButton[][] bee = new JButton[8][5];
+    JButton[][] mini = new JButton[4][1];
+
     static JFrame f;
     static JFrame e;
 
@@ -58,19 +60,11 @@ public class nyt implements ActionListener{
         resetContainer.setLayout(new GridLayout(1, 1));
         boardContainer.setLayout(new GridLayout(4, 4));
 
-
         Container wordContainer = new Container();
         wordContainer.setLayout(new GridLayout(6, 5));
 
-        Container enterContainer = new Container();
-        Container beeContainer = new Container();
-        enterContainer.setLayout(new GridLayout(1, 1));
-        beeContainer.setLayout(new GridLayout(8, 5));
-
         resetButton.addActionListener(this);
         resetContainer.add(resetButton);
-
-
 
         for (int row = 0; row < board.length; row++) {
             for (int col = 0; col < board[0].length; col++) {
@@ -80,6 +74,7 @@ public class nyt implements ActionListener{
 
             }
         }
+
         for (int row = 0; row < word.length; row++) {
             for (int col = 0; col < word[0].length; col++) {
                 word[row][col] = new JButton();
@@ -88,23 +83,11 @@ public class nyt implements ActionListener{
 
             }
         }
-        for (int row = 0; row < bee.length; row++) {
-            for (int col = 0; col < bee[0].length; col++) {
-                bee[row][col] = new JButton();
-                bee[row][col].addActionListener(this);
-                beeContainer.add(bee[row][col]);
 
-            }
-        }
         window.add(resetContainer, BorderLayout.NORTH);
         window.add(boardContainer, BorderLayout.CENTER);
 
-
         game1.add(wordContainer, BorderLayout.CENTER);
-
-        game2.add(enterContainer, BorderLayout.NORTH);
-        game2.add(beeContainer, BorderLayout.CENTER);
-
 
         System.out.println("Welcome to the NYT mini games! Select from the eligible games listed to get started.");
         System.out.println("Which game would you like to play? (1, 2 or 3)");
@@ -120,7 +103,7 @@ public class nyt implements ActionListener{
 
         }
         if(bla.equals("2")){
-            game2.setVisible(true);
+
             spellingBee();
 
         }
@@ -128,9 +111,8 @@ public class nyt implements ActionListener{
             window.setVisible(true);
             connections();
         }
-
-
     }
+
     String[] words = {"ABOUT", "ALERT", "ARGUE", "BEACH", "ACTOR", "ALLOW", "ASIDE", "BEGUN",
             "ADULT", "AMONG", "AVOID", "BILLY", "AGREE", "APART", "BAKER", "BLIND",
             "BOOST", "BUYER", "CHINA", "COVER", "BRAND", "CATCH", "CLASS", "CRIME",
@@ -168,8 +150,6 @@ public class nyt implements ActionListener{
                     word[numb][i].setOpaque(true);
                     word[numb][i].setEnabled(false);
 
-
-
                 } else if (correct.indexOf(guess.substring(i, i + 1)) > -1) {
                     word[numb][i].setText(guess.substring(i, i + 1));
                     word[numb][i].setBackground(Color.YELLOW);
@@ -198,7 +178,6 @@ public class nyt implements ActionListener{
         }
 
     }
-
     public void spellingBee(){
 
         System.out.println("To play the Spelling Bee you need to type words MORE than THREE ");
@@ -228,54 +207,154 @@ public class nyt implements ActionListener{
                 "O B F G L R U", "D A I M N O T", "L A D I T V Y", "E F K L M N O", "I F G H L T Y", "B A C D E N U" ,
                 "R A D K L O W", "O C G I N U V", "G A I L O R T", "D A B I L O R", "N D E I P U Z", "C A B K M O R"};
         int y = (int)(Math.random()*game.size());
+
         if(y == 0){
-            JButton[][] bee = new JButton[8][5];
+            bee = new JButton[8][6];
+            JButton enterButton = new JButton("F               A               B               E               I               L               N");
+
+            Container enterContainer = new Container();
+            Container beeContainer = new Container();
+            enterContainer.setLayout(new GridLayout(1, 1));
+            beeContainer.setLayout(new GridLayout(8, 6));
+
+            for (int row = 0; row < bee.length; row++) {
+                for (int col = 0; col < bee[0].length; col++) {
+                    bee[row][col] = new JButton();
+                    bee[row][col].addActionListener(this);
+                    beeContainer.add(bee[row][col]);
+                }
+            }
+
+            enterButton.addActionListener(this);
+            enterContainer.add(enterButton);
+
+            game2.add(enterContainer, BorderLayout.NORTH);
+            game2.add(beeContainer, BorderLayout.CENTER);
+
+            bee[7][5].setText("Score: " + score);
+            bee[7][5].setEnabled(false);
+
+            game2.setVisible(true);
+
+        }
+        if(y == 1){
+            bee = new JButton[6][4];
+            JButton enterButton = new JButton("R               G               N               O               P               U               W");
+
+            Container enterContainer = new Container();
+            Container beeContainer = new Container();
+            enterContainer.setLayout(new GridLayout(1, 1));
+            beeContainer.setLayout(new GridLayout(6, 4));
+
+            for (int row = 0; row < bee.length; row++) {
+                for (int col = 0; col < bee[0].length; col++) {
+                    bee[row][col] = new JButton();
+                    bee[row][col].addActionListener(this);
+                    beeContainer.add(bee[row][col]);
+
+                }
+
+            }
+
+            enterButton.addActionListener(this);
+            enterContainer.add(enterButton);
+
+            game2.add(enterContainer, BorderLayout.NORTH);
+            game2.add(beeContainer, BorderLayout.CENTER);
+
+            bee[5][3].setText("Score: " + score);
+            bee[5][3].setEnabled(false);
+
+            game2.setVisible(true);
+
         }
         String guess = "";
         ArrayList<String> guesser= new ArrayList<String>();
-        while(game.get(y).getArray().length> 0 && !guess.equals("QUIT") && guesser.size()!=game.get(y).getArray().length){
-            System.out.println(BG_YELLOW + game.get(y).getLetters().substring(0,1)+ RESET + game.get(y).getLetters().substring(1));
+        while(game.get(y).getArray().length> 0 && !guess.equals("QUIT") && guesser.size()!=game.get(y).getArray().length) {
+
+            System.out.println(BG_YELLOW + game.get(y).getLetters().substring(0, 1) + RESET + game.get(y).getLetters().substring(1));
             Scanner sc = new Scanner(System.in);
             System.out.println("Please enter your word: ");
             guess = sc.nextLine().toUpperCase();
             int a = 0;
             int b = 0;
-            for(int i = 0; i<game.get(y).getArray().length;i++) {
-                if (guess.equals(game.get(y).getArray()[i])&& !guesser.contains(guess)) {
-                    a=1;
+            for (int i = 0; i < game.get(y).getArray().length; i++) {
+                if (guess.equals(game.get(y).getArray()[i]) && !guesser.contains(guess)) {
+                    a = 1;
                     b = i;
 
                 }
             }
 
+            if (a == 1) {
+                int r = 0;
+                int c = 0;
+                score = score + game.get(y).getArray()[b].length();
+                System.out.println("+" + game.get(y).getArray()[b].length());
+                System.out.println("Total: " + score);
+                guesser.add(guess);
+                if (y == 0) {
+                    r = (int) (Math.random() * 8);
+                    c = (int) (Math.random() * 6);
+                }
+                if (y == 1) {
+                    r = (int) (Math.random() * 6);
+                    c = (int) (Math.random() * 4);
+                }
+                if (bee[r][c].isEnabled()) {
+                    bee[r][c].setText(guess);
+                    bee[r][c].setEnabled(false);
+                    if (y == 0) {
+                        bee[7][5].setText("Score: " + score);
+                        bee[7][5].setEnabled(false);
+                    }
+                    if (y == 1) {
+                        bee[5][3].setText("Score: " + score);
+                        bee[5][3].setEnabled(false);
+                    }
+                } else {
+                    while (!bee[r][c].isEnabled()) {
+                        if (y == 0) {
+                            r = (int) (Math.random() * 8);
+                            c = (int) (Math.random() * 6);
+                        }
+                        if (y == 1) {
+                            r = (int) (Math.random() * 6);
+                            c = (int) (Math.random() * 4);
+                        }
+                    }
+                    bee[r][c].setText(guess);
+                    bee[r][c].setEnabled(false);
+                    if (y == 0) {
+                        bee[7][5].setText("Score: " + score);
+                        bee[7][5].setEnabled(false);
+                    }
+                    if (y == 1) {
+                        bee[5][3].setText("Score: " + score);
+                        bee[5][3].setEnabled(false);
+                    }
 
-                if (a == 1) {
-                    score = score + game.get(y).getArray()[b].length();
-                    System.out.println("+" + game.get(y).getArray()[b].length());
-                    System.out.println("Total: " + score);
-                    guesser.add(guess);
-                }
-                else if (guesser.contains(guess)) {
-                    System.out.println("Word has already been used. Try again.");
                 }
 
-                else if (a == 0 && !guess.equals("QUIT")) {
-                    System.out.println("Not an eligible word. Try again.");
-                }
-                if (guess.equals("QUIT")) {
-                    System.out.println("Better luck next time!");
-                }
+            } else if (guesser.contains(guess)) {
+                System.out.println("Word has already been used. Try again.");
+            } else if (a == 0 && !guess.equals("QUIT")) {
+                System.out.println("Not an eligible word. Try again.");
+            }
+            if (guess.equals("QUIT")) {
+                System.out.println("Better luck next time!");
+            }
 
-                if (guesser.size() == game.get(y).getArray().length) {
-                    System.out.println("You have found all the possible words!");
-                }
+            if (guesser.size() == game.get(y).getArray().length) {
+                System.out.println("You have found all the possible words!");
+            }
 
         }
 
     }
     String[][] nums = new String[4][4];
-    //int num = (int) (Math.random()*4)+2;
-    int num = 1;
+    int num = (int) (Math.random()*4)+2;
+
     String[][] one = {{"COLLAPSE", "WAVE", "SEA", "GIVE"},
             {"CAVE", "DANCE", "FLOP", "MASS"},
             {"BUCKLE", "SNAP", "WHISTLE", "TON"}
@@ -365,10 +444,7 @@ public class nyt implements ActionListener{
 
                         board[row][col].setEnabled(false);
                         count++;
-
                     }
-
-
                 }
             }
             if (e.getSource() == resetButton) {
@@ -500,7 +576,6 @@ public class nyt implements ActionListener{
                                 board[w][g].setText(h);
                                 g++;
                             }
-
                         }
                     }
                     for (int r = 0; r < 4; r++) {
@@ -509,8 +584,6 @@ public class nyt implements ActionListener{
                         board[w][r].setEnabled(false);
                     }
                     w++;
-
-
                 } else if (n == 1) {
                     int g = 0;
                     for (int row = w; row < board.length; row++) {
@@ -523,7 +596,6 @@ public class nyt implements ActionListener{
                                 board[row][col].setText(j);
                                 g++;
                             }
-
                         }
                     }
                     for (int c = 0; c < 4; c++) {
@@ -532,7 +604,6 @@ public class nyt implements ActionListener{
                         board[w][c].setEnabled(false);
                     }
                     w++;
-
 
                 } else if (n == 2) {
                     int g = 0;
@@ -546,7 +617,6 @@ public class nyt implements ActionListener{
                                 board[row][col].setText(j);
                                 g++;
                             }
-
                         }
                     }
                     for (int c = 0; c < 4; c++) {
@@ -569,7 +639,6 @@ public class nyt implements ActionListener{
                                 board[row][col].setText(j);
                                 g++;
                             }
-
                         }
                     }
                     for (int c = 0; c < 4; c++) {
@@ -587,9 +656,7 @@ public class nyt implements ActionListener{
                             }
                         }
                     }
-
                 }
-
 
                 count = 0;
             }
@@ -601,15 +668,7 @@ public class nyt implements ActionListener{
                             f.show();
                         }
                     }
-
                 }
-
-
             }
-
         }
     }
-
-
-
-
