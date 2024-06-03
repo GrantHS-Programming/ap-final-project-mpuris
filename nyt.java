@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import javax.swing.JTextArea;
 public class nyt implements ActionListener{
     final String BG_GREEN = "\u001b[42m";
     final String BG_YELLOW = "\u001b[43m";
@@ -15,10 +16,9 @@ public class nyt implements ActionListener{
     JFrame begin = new JFrame("NYT MINI GAMES");
     JButton resetButton = new JButton("ENTER");
     JButton[][] bee;
-
     JButton[][] board = new JButton[4][4];
     JButton[][] word = new JButton[6][5];
-    JButton[][] mini = new JButton[4][1];
+    JButton[][] mini = new JButton[3][1];
 
     static JFrame f;
     static JFrame e;
@@ -26,7 +26,7 @@ public class nyt implements ActionListener{
     public static void main(String[] args) {
 
         new nyt();
-/*        f = new JFrame("YOU WON");
+/*      f = new JFrame("YOU WON");
         e = new JFrame("YOU WON");
 
         JPanel p = new JPanel();
@@ -36,7 +36,7 @@ public class nyt implements ActionListener{
         p.add(b);
 
         f.add(p);
-        e.add(p);
+        e.add(b);
 
         // set the size of frame
         f.setSize(400, 400);
@@ -55,6 +55,10 @@ public class nyt implements ActionListener{
         game2.setSize(800, 800);
         game2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        begin.setLayout(new BorderLayout());
+        begin.setSize(800, 800);
+        begin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         Container resetContainer = new Container();
         Container boardContainer = new Container();
         resetContainer.setLayout(new GridLayout(1, 1));
@@ -62,6 +66,9 @@ public class nyt implements ActionListener{
 
         Container wordContainer = new Container();
         wordContainer.setLayout(new GridLayout(6, 5));
+
+        Container miniContainer = new Container();
+        miniContainer.setLayout(new GridLayout(3, 1));
 
         resetButton.addActionListener(this);
         resetContainer.add(resetButton);
@@ -84,33 +91,28 @@ public class nyt implements ActionListener{
             }
         }
 
+        for (int row = 0; row < mini.length; row++) {
+            for (int col = 0; col < mini[0].length; col++) {
+                mini[row][col] = new JButton();
+                mini[row][col].addActionListener(this);
+                miniContainer.add(mini[row][col]);
+
+            }
+        }
+
         window.add(resetContainer, BorderLayout.NORTH);
         window.add(boardContainer, BorderLayout.CENTER);
 
         game1.add(wordContainer, BorderLayout.CENTER);
 
-        System.out.println("Welcome to the NYT mini games! Select from the eligible games listed to get started.");
-        System.out.println("Which game would you like to play? (1, 2 or 3)");
-        System.out.println("1. WORDLE");
-        System.out.println("2. SPELLING BEE");
-        System.out.println("3. CONNECTIONS");
-        Scanner stringScanner = new Scanner(System.in);
-        String bla = stringScanner.next();
-        if(bla.equals("1")){
+        begin.add(miniContainer, BorderLayout.CENTER);
+        mini[0][0].setText("WORDLE");
+        mini[1][0].setText("SPELLING BEE");
+        mini[2][0].setText("CONNECTIONS");
 
-            game1.setVisible(true);
-            wordle();
+        begin.setVisible(true);
 
-        }
-        if(bla.equals("2")){
 
-            spellingBee();
-
-        }
-        if(bla.equals("3")){
-            window.setVisible(true);
-            connections();
-        }
     }
 
     String[] words = {"ABOUT", "ALERT", "ARGUE", "BEACH", "ACTOR", "ALLOW", "ASIDE", "BEGUN",
@@ -353,39 +355,40 @@ public class nyt implements ActionListener{
 
     }
     String[][] nums = new String[4][4];
-    int num = (int) (Math.random()*4)+2;
+    int num = (int) (Math.random()*5)+1;
+
 
     String[][] one = {{"COLLAPSE", "WAVE", "SEA", "GIVE"},
             {"CAVE", "DANCE", "FLOP", "MASS"},
             {"BUCKLE", "SNAP", "WHISTLE", "TON"}
-            ,         {"BUTTON", "SHOUT","SLEW", "LAUGH"}};
+            ,{"BUTTON", "SHOUT","SLEW", "LAUGH"}};
     String fall = "BUCKLECAVECOLLAPSEGIVE";
     String attention = "SHOUTSNAPWAVEWHISTLE";
     String amount = "MASSSEASLEWTON";
     String belly = "BUTTONDANCEFLOPLAUGH";
     String[][] two = {
-            {" JELLY BEAN ", " LOUNGE ", " FELLOW ", " BUNNY "},
-            {" PEER ", " PARTNER ", " LIBRARY ", " EGG "},
-            {" SPY ", " HALL ", " PEEP ", " BIRTHMARK "},
-            {" ASSOCIATE ", " STUDY "," ANIMAL ", " UNIT "}};
+            {"JELLY BEAN", "LOUNGE", "FELLOW", "BUNNY"},
+            {"PEER", "PARTNER", "LIBRARY", "EGG"},
+            {"SPY", "HALL", "PEEP", "BIRTHMARK"},
+            {"ASSOCIATE", "STUDY","ANIMAL", "UNIT"}};
     String easter = "BUNNYEGGJELLY BEANPEEP";
     String pal = "ASSOCIATEFELLOWPARTNERPEER";
     String clue = "HALLLIBRARYLOUNGESTUDY";
     String mole = "ANIMALBIRTHMARKSPYUNIT";
     String[][] three = {
-            {" CHANNEL ", " OUTSIDE ", " VEHICLE ", " STYLES "},
-            {" LARGE ", " SWIFT ", " MEDIUM ", " GRANDE "},
-            {" MARS ", " REMOTE ", " LEGEND ", " SLIM "},
-            {" MEANS ", " ROOM "," PROOF ", " SMALL "}};
+            {"CHANNEL", "OUTSIDE", "VEHICLE", "STYLES"},
+            {"LARGE", "SWIFT", "MEDIUM", "GRANDE"},
+            {"MARS", "REMOTE", "LEGEND", "SLIM"},
+            {"MEANS", "ROOM","PROOF", "SMALL"}};
     String pop = "GRANDEMARSSTYLESSWIFT";
     String method = "CHANNELMEANSMEDIUMVEHICLE";
     String chance = "OUTSIDEREMOTESLIMSMALL";
     String living = "LARGELEGENDPROOFROOM";
 
     String[][] four = {
-            {" COMPLAINT ", " WINDSOCK ", " CLAIM ", " RUNWAY "},
-            {" FOXGLOVE ", " HANGAR ", " TURNCOAT ", " LAWSUIT "},
-            {" RING ", " ACTION ", "TORCH", "CLUB"},
+            {"COMPLAINT", "WINDSOCK", "CLAIM", "RUNWAY"},
+            {"FOXGLOVE", "HANGAR", "TURNCOAT", "LAWSUIT"},
+            {"RING", "ACTION", "TORCH", "CLUB"},
             {"BEANBAG", "GUMSHOE","TARMAC", "TERMINAL"}};
     String airport = "HANGARRUNWAYTARMACTERMINAL";
     String legal = "ACTIONCLAIMCOMPLAINTLAWSUIT";
@@ -401,6 +404,7 @@ public class nyt implements ActionListener{
     String rid = "CLEARDRAINEMPTYFLUSH";
     String stub = "CIGARETTEPENCILTICKETTOE";
     public void connections(){
+        System.out.println(num);
 
         int row = 4;
         int col = 4;
@@ -437,6 +441,29 @@ public class nyt implements ActionListener{
     int numb = 0;
     @Override
     public void actionPerformed(ActionEvent e) {
+        for(int fi = 0; fi<mini.length; fi++){
+            for(int yo = 0; yo<mini[0].length; yo++){
+                if (e.getSource().equals(mini[fi][yo])) {
+                    mini[fi][yo].setEnabled(false);
+                    if(!mini[0][0].isEnabled()){
+                        begin.setVisible(false);
+                        game1.setVisible(true);
+                        game1.repaint();
+                        wordle();
+                    }
+                    if(!mini[1][0].isEnabled()){
+                        begin.setVisible(false);
+                        spellingBee();
+                    }
+                    if(!mini[2][0].isEnabled()){
+                        begin.setVisible(false);
+                        window.setVisible(true);
+                        connections();
+                    }
+                }
+            }
+
+        }
             for (int row = 0; row < board.length; row++) {
                 for (int col = 0; col < board[0].length; col++) {
 
@@ -449,6 +476,7 @@ public class nyt implements ActionListener{
             }
             if (e.getSource() == resetButton) {
                 ArrayList<String> q = new ArrayList<String>();
+                n = -1;
                 if (num == 1) {
                     for (int y = w; y < board.length; y++) {
                         for (int x = 0; x < board[0].length; x++) {
@@ -457,7 +485,9 @@ public class nyt implements ActionListener{
                             }
                         }
                     }
-                    System.out.println(q);
+
+
+
 
                     if (amount.contains(q.get(0)) && amount.contains(q.get(1)) && amount.contains(q.get(2)) && amount.contains(q.get(3))) {
                         n = 2;
@@ -480,7 +510,7 @@ public class nyt implements ActionListener{
                             }
                         }
                     }
-                    System.out.println(q);
+
 
                     if (mole.contains(q.get(0)) && mole.contains(q.get(1)) && mole.contains(q.get(2)) && mole.contains(q.get(3))) {
                         n = 3;
@@ -503,7 +533,7 @@ public class nyt implements ActionListener{
                             }
                         }
                     }
-                    System.out.println(q);
+
 
                     if (living.contains(q.get(0)) && living.contains(q.get(1)) && living.contains(q.get(2)) && living.contains(q.get(3))) {
                         n = 3;
@@ -526,7 +556,7 @@ public class nyt implements ActionListener{
                             }
                         }
                     }
-                    System.out.println(q);
+
 
                     if (clothing.contains(q.get(0)) && clothing.contains(q.get(1)) && clothing.contains(q.get(2)) && clothing.contains(q.get(3))) {
                         n = 3;
@@ -549,7 +579,7 @@ public class nyt implements ActionListener{
                             }
                         }
                     }
-                    System.out.println(q);
+
 
                     if (dream.contains(q.get(0)) && dream.contains(q.get(1)) && dream.contains(q.get(2)) && dream.contains(q.get(3))) {
                         n = 3;
@@ -616,8 +646,8 @@ public class nyt implements ActionListener{
                                 board[w][g].setText(h);
                                 board[row][col].setText(j);
                                 g++;
-                            }
-                        }
+                           }
+                         }
                     }
                     for (int c = 0; c < 4; c++) {
                         board[w][c].setBackground(Color.YELLOW);
