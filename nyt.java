@@ -4,9 +4,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import javax.swing.JTextArea;
+
 public class nyt implements ActionListener{
+     JTextField t;
+     JButton b;
+
+    // create a new frame to store text field and button
+
     final String BG_GREEN = "\u001b[42m";
     final String BG_YELLOW = "\u001b[43m";
     final String RESET = "\u001b[0m";
@@ -20,10 +24,9 @@ public class nyt implements ActionListener{
     JButton[][] word = new JButton[6][5];
     JButton[][] mini = new JButton[3][1];
 
-    static JFrame f;
-    static JFrame e;
-
     public static void main(String[] args) {
+        // create a label to display text
+
 
         new nyt();
 /*      f = new JFrame("YOU WON");
@@ -41,8 +44,23 @@ public class nyt implements ActionListener{
         // set the size of frame
         f.setSize(400, 400);
         e.setSize(400, 400);*/
+
     }
     public nyt(){
+
+
+        b = new JButton("submit");
+
+        b.addActionListener(this);
+
+        t = new JTextField(16);
+        Container gamaContainer = new Container();
+        gamaContainer.setLayout(new GridLayout(1, 2));
+
+        gamaContainer.add(t);
+        gamaContainer.add(b);
+
+
         window.setLayout(new BorderLayout());
         window.setSize(800, 800);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -104,6 +122,7 @@ public class nyt implements ActionListener{
         window.add(boardContainer, BorderLayout.CENTER);
 
         game1.add(wordContainer, BorderLayout.CENTER);
+        game1.add(gamaContainer, BorderLayout.SOUTH);
 
         begin.add(miniContainer, BorderLayout.CENTER);
         mini[0][0].setText("WORDLE");
@@ -439,8 +458,43 @@ public class nyt implements ActionListener{
     int n = -1;
     int w = 0;
     int numb = 0;
+
     @Override
     public void actionPerformed(ActionEvent e) {
+        String s = e.getActionCommand();
+        int a = 0;
+        if (s.equals("submit")) {
+            while(a<6){
+            guess = t.getText();
+            guess = guess.toUpperCase();
+            t.setText("");
+            for (int i = 0; i < 5; i++) {
+                if (guess.substring(i, i + 1).equals(correct.substring(i, i + 1))) {
+                    word[numb][i].setText(guess.substring(i, i + 1));
+                    word[numb][i].setBackground(Color.GREEN);
+                    word[numb][i].setOpaque(true);
+                    word[numb][i].setEnabled(false);
+
+                } else if (correct.indexOf(guess.substring(i, i + 1)) > -1) {
+                    word[numb][i].setText(guess.substring(i, i + 1));
+                    word[numb][i].setBackground(Color.YELLOW);
+                    word[numb][i].setOpaque(true);
+                    word[numb][i].setEnabled(false);
+
+                } else {
+                    word[numb][i].setText(guess.substring(i, i + 1));
+                    word[numb][i].setOpaque(true);
+                    word[numb][i].setEnabled(false);
+
+                }
+                if(guess.equals(correct)){
+                    break;
+                }
+            }
+            numb++;
+            a++;
+        }
+        }
         for(int fi = 0; fi<mini.length; fi++){
             for(int yo = 0; yo<mini[0].length; yo++){
                 if (e.getSource().equals(mini[fi][yo])) {
@@ -449,10 +503,12 @@ public class nyt implements ActionListener{
                         begin.setVisible(false);
                         game1.setVisible(true);
                         game1.repaint();
-                        wordle();
+
+
                     }
                     if(!mini[1][0].isEnabled()){
                         begin.setVisible(false);
+                        game2.setVisible(true);
                         spellingBee();
                     }
                     if(!mini[2][0].isEnabled()){
@@ -695,7 +751,7 @@ public class nyt implements ActionListener{
                     if (!board[row][col].isEnabled()) {
                         y++;
                         if (y == 16) {
-                            f.show();
+
                         }
                     }
                 }
