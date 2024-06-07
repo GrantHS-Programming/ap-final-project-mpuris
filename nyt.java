@@ -7,7 +7,10 @@ import java.awt.event.ActionListener;
 
 public class nyt implements ActionListener{
      JTextField t;
+     JTextField g2;
      JButton b;
+     JButton tw;
+    Container betaContainer = new Container();
 
     // create a new frame to store text field and button
 
@@ -46,7 +49,23 @@ public class nyt implements ActionListener{
         e.setSize(400, 400);*/
 
     }
+    ArrayList<Puzzle> game= new ArrayList<Puzzle>();
+    int score = 0;
     public nyt(){
+
+        Puzzle uno = new Puzzle("F A B E I L N", new String[]
+                {"AFFABLE", "ALFALFA", "BAFFLE", "BAILIFF", "BEEF",
+                        "BEFALL", "BEFALLEN", "BEFELL", "BELIEF", "BIFF", "ELFIN", "ENFEEBLE", "FABLE", "FAIL", "FALAFEL",
+                        "FALL", "FALLEN", "FALLIBLE", "FEEBLE", "FEEL", "FELINE", "FELL", "FELLA", "FENNEL", "FIEF", "FIFE",
+                        "FILE", "FILIAL", "FILL", "FILLABLE", "FINAL", "FINALE", "FINE","FINIAL","FLAB", "FLAIL", "FLAN",
+                        "FLANNEL", "FLEA", "FLEE", "INEFFABLE", "INFALLIBLE", "INFILL","LEAF","LIFE","LIFELINE","NAIF"});
+        Puzzle dos = new Puzzle("R G N O P U W", new String[]{"GORGON", "GORP", "GROG", "GROUP", "GROW", "GROWN",
+                "GROWNUP", "GURU", "POOR", "PORN", "PORNO", "POUR", "PRONG", "PRONOUN", "PROP", "PROW", "PURR", "RUNG",
+                "UNGROUP", "UNWORN", "WORN", "WRONG", "WRUNG"});
+
+
+        game.add(uno);
+        game.add(dos);
 
 
         b = new JButton("submit");
@@ -59,6 +78,17 @@ public class nyt implements ActionListener{
 
         gamaContainer.add(t);
         gamaContainer.add(b);
+
+        tw = new JButton("enter");
+
+        tw.addActionListener(this);
+
+        g2 = new JTextField(16);
+
+        betaContainer.setLayout(new GridLayout(1, 2));
+
+        betaContainer.add(g2);
+        betaContainer.add(tw);
 
 
         window.setLayout(new BorderLayout());
@@ -133,11 +163,10 @@ public class nyt implements ActionListener{
 
 
     }
-
     String[] words = {"ABOUT", "ALERT", "ARGUE", "BEACH", "ACTOR", "ALLOW", "ASIDE", "BEGUN",
             "ADULT", "AMONG", "AVOID", "BILLY", "AGREE", "APART", "BAKER", "BLIND",
             "BOOST", "BUYER", "CHINA", "COVER", "BRAND", "CATCH", "CLASS", "CRIME",
-            "BRING", "CHASE", "CLOSE", "CYCLE", "BUILD", "CHEIF", "COUNT", "DEALT",
+            "BRING", "CHASE", "CLOSE", "CYCLE", "BUILD", "CHIEF", "COUNT", "DEALT",
             "DEPTH", "ERROR", "FORUM", "GUARD", "DOZEN", "EXACT", "FRANK", "GUIDE",
             "DREAM", "FALSE", "FRUIT", "HEAVY", "DRIVE", "FIFTH", "GIVEN", "HOTEL",
             "EARLY", "FIRST", "GRACE", "IMAGE", "EMPTY", "FLOOR", "GRASS", "ISSUE",
@@ -154,225 +183,6 @@ public class nyt implements ActionListener{
     String correct = words[y];
     Scanner sc = new Scanner(System.in);
     String guess = "";
-
-    public void wordle() {
-
-        System.out.println("WORDLE!");
-        for(int a = 0; a <6; a++) {
-            System.out.print("Please guess: ");
-
-                    guess = sc.nextLine().toUpperCase();
-
-            for (int i = 0; i < 5; i++) {
-
-                if (guess.substring(i, i + 1).equals(correct.substring(i, i + 1))) {
-                    word[numb][i].setText(guess.substring(i, i + 1));
-                    word[numb][i].setBackground(Color.GREEN);
-                    word[numb][i].setOpaque(true);
-                    word[numb][i].setEnabled(false);
-
-                } else if (correct.indexOf(guess.substring(i, i + 1)) > -1) {
-                    word[numb][i].setText(guess.substring(i, i + 1));
-                    word[numb][i].setBackground(Color.YELLOW);
-                    word[numb][i].setOpaque(true);
-                    word[numb][i].setEnabled(false);
-
-                } else {
-                    word[numb][i].setText(guess.substring(i, i + 1));
-                    word[numb][i].setOpaque(true);
-                    word[numb][i].setEnabled(false);
-
-                }
-
-            }
-            numb++;
-
-            System.out.println("");
-            if(guess.equals(correct)){
-                System.out.println("Correct! You win!");
-                break;
-            }
-
-        }
-        if(!guess.equals(correct)){
-            System.out.println("Wrong! The correct word is " + correct + ".");
-        }
-
-    }
-    public void spellingBee(){
-
-        System.out.println("To play the Spelling Bee you need to type words MORE than THREE ");
-        System.out.println("letters long. WORDS MUST INCLUDE HIGHLIGHTED LETTER. The ");
-        System.out.println("longer the word, the more points you'll get. If you ever wish to ");
-        System.out.println("exit the game simply type 'quit'. Good Luck!");
-        ArrayList<Puzzle> game= new ArrayList<Puzzle>();
-        int score = 0;
-        Puzzle one = new Puzzle("F A B E I L N", new String[]
-                {"AFFABLE", "ALFALFA", "BAFFLE", "BAILIFF", "BEEF",
-                "BEFALL", "BEFALLEN", "BEFELL", "BELIEF", "BIFF", "ELFIN", "ENFEEBLE", "FABLE", "FAIL", "FALAFEL",
-                "FALL", "FALLEN", "FALLIBLE", "FEEBLE", "FEEL", "FELINE", "FELL", "FELLA", "FENNEL", "FIEF", "FIFE",
-                "FILE", "FILIAL", "FILL", "FILLABLE", "FINAL", "FINALE", "FINE","FINIAL","FLAB", "FLAIL", "FLAN",
-                "FLANNEL", "FLEA", "FLEE", "INEFFABLE", "INFALLIBLE", "INFILL","LEAF","LIFE","LIFELINE","NAIF"});
-        Puzzle two = new Puzzle("R G N O P U W", new String[]{"GORGON", "GORP", "GROG", "GROUP", "GROW", "GROWN",
-                "GROWNUP", "GURU", "POOR", "PORN", "PORNO", "POUR", "PRONG", "PRONOUN", "PROP", "PROW", "PURR", "RUNG",
-                "UNGROUP", "UNWORN", "WORN", "WRONG", "WRUNG"});
-        game.add(one);
-        game.add(two);
-        Puzzle three = new Puzzle("H A E L N P T", new String[]{"ALEPH", "ALPHA", "ATHLETE", "ELEPHANT", "ETHANE",
-                "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", });
-        String[] letters = { "G A C E N O T", "I A D L M O R",
-                "L B E N O T V", "N C D E K T U", "C A I N R T Y", "R A H T U W Y", "F D E I L P U", "M A D L N T Y" ,
-                "O F C I M N R", "T D E G I L U", "U B E D H L M", "C H I M N O P", "O A E G H L N", "A C E I N T Y" ,
-                "O A B E L M Z", "F C D E I N O", "O D G H I L R", "R A B D L O Y", "T D E G H L N", "I A C H L R V" ,
-                "I A G J M N U", "F A C I L R Y", "B A C E I L P", "V E G I L N O", "N C I M O T U", "E A C D T V X" ,
-                "O B F G L R U", "D A I M N O T", "L A D I T V Y", "E F K L M N O", "I F G H L T Y", "B A C D E N U" ,
-                "R A D K L O W", "O C G I N U V", "G A I L O R T", "D A B I L O R", "N D E I P U Z", "C A B K M O R"};
-        int y = (int)(Math.random()*game.size());
-
-        if(y == 0){
-            bee = new JButton[8][6];
-            JButton enterButton = new JButton("F               A               B               E               I               L               N");
-
-            Container enterContainer = new Container();
-            Container beeContainer = new Container();
-            enterContainer.setLayout(new GridLayout(1, 1));
-            beeContainer.setLayout(new GridLayout(8, 6));
-
-            for (int row = 0; row < bee.length; row++) {
-                for (int col = 0; col < bee[0].length; col++) {
-                    bee[row][col] = new JButton();
-                    bee[row][col].addActionListener(this);
-                    beeContainer.add(bee[row][col]);
-                }
-            }
-
-            enterButton.addActionListener(this);
-            enterContainer.add(enterButton);
-
-            game2.add(enterContainer, BorderLayout.NORTH);
-            game2.add(beeContainer, BorderLayout.CENTER);
-
-            bee[7][5].setText("Score: " + score);
-            bee[7][5].setEnabled(false);
-
-            game2.setVisible(true);
-
-        }
-        if(y == 1){
-            bee = new JButton[6][4];
-            JButton enterButton = new JButton("R               G               N               O               P               U               W");
-
-            Container enterContainer = new Container();
-            Container beeContainer = new Container();
-            enterContainer.setLayout(new GridLayout(1, 1));
-            beeContainer.setLayout(new GridLayout(6, 4));
-
-            for (int row = 0; row < bee.length; row++) {
-                for (int col = 0; col < bee[0].length; col++) {
-                    bee[row][col] = new JButton();
-                    bee[row][col].addActionListener(this);
-                    beeContainer.add(bee[row][col]);
-
-                }
-
-            }
-
-            enterButton.addActionListener(this);
-            enterContainer.add(enterButton);
-
-            game2.add(enterContainer, BorderLayout.NORTH);
-            game2.add(beeContainer, BorderLayout.CENTER);
-
-            bee[5][3].setText("Score: " + score);
-            bee[5][3].setEnabled(false);
-
-            game2.setVisible(true);
-
-        }
-        String guess = "";
-        ArrayList<String> guesser= new ArrayList<String>();
-        while(game.get(y).getArray().length> 0 && !guess.equals("QUIT") && guesser.size()!=game.get(y).getArray().length) {
-
-            System.out.println(BG_YELLOW + game.get(y).getLetters().substring(0, 1) + RESET + game.get(y).getLetters().substring(1));
-            Scanner sc = new Scanner(System.in);
-            System.out.println("Please enter your word: ");
-            guess = sc.nextLine().toUpperCase();
-            int a = 0;
-            int b = 0;
-            for (int i = 0; i < game.get(y).getArray().length; i++) {
-                if (guess.equals(game.get(y).getArray()[i]) && !guesser.contains(guess)) {
-                    a = 1;
-                    b = i;
-
-                }
-            }
-
-            if (a == 1) {
-                int r = 0;
-                int c = 0;
-                score = score + game.get(y).getArray()[b].length();
-                System.out.println("+" + game.get(y).getArray()[b].length());
-                System.out.println("Total: " + score);
-                guesser.add(guess);
-                if (y == 0) {
-                    r = (int) (Math.random() * 8);
-                    c = (int) (Math.random() * 6);
-                }
-                if (y == 1) {
-                    r = (int) (Math.random() * 6);
-                    c = (int) (Math.random() * 4);
-                }
-                if (bee[r][c].isEnabled()) {
-                    bee[r][c].setText(guess);
-                    bee[r][c].setEnabled(false);
-                    if (y == 0) {
-                        bee[7][5].setText("Score: " + score);
-                        bee[7][5].setEnabled(false);
-                    }
-                    if (y == 1) {
-                        bee[5][3].setText("Score: " + score);
-                        bee[5][3].setEnabled(false);
-                    }
-                } else {
-                    while (!bee[r][c].isEnabled()) {
-                        if (y == 0) {
-                            r = (int) (Math.random() * 8);
-                            c = (int) (Math.random() * 6);
-                        }
-                        if (y == 1) {
-                            r = (int) (Math.random() * 6);
-                            c = (int) (Math.random() * 4);
-                        }
-                    }
-                    bee[r][c].setText(guess);
-                    bee[r][c].setEnabled(false);
-                    if (y == 0) {
-                        bee[7][5].setText("Score: " + score);
-                        bee[7][5].setEnabled(false);
-                    }
-                    if (y == 1) {
-                        bee[5][3].setText("Score: " + score);
-                        bee[5][3].setEnabled(false);
-                    }
-
-                }
-
-            } else if (guesser.contains(guess)) {
-                System.out.println("Word has already been used. Try again.");
-            } else if (a == 0 && !guess.equals("QUIT")) {
-                System.out.println("Not an eligible word. Try again.");
-            }
-            if (guess.equals("QUIT")) {
-                System.out.println("Better luck next time!");
-            }
-
-            if (guesser.size() == game.get(y).getArray().length) {
-                System.out.println("You have found all the possible words!");
-            }
-
-        }
-
-    }
     String[][] nums = new String[4][4];
     int num = (int) (Math.random()*5)+1;
 
@@ -459,12 +269,16 @@ public class nyt implements ActionListener{
     int w = 0;
     int numb = 0;
 
+
+
+    int yu = (int)(Math.random()*2);
+
     @Override
     public void actionPerformed(ActionEvent e) {
         String s = e.getActionCommand();
-        int a = 0;
+        int m = 0;
         if (s.equals("submit")) {
-            while(a<6){
+            while(m<6){
             guess = t.getText();
             guess = guess.toUpperCase();
             t.setText("");
@@ -487,14 +301,20 @@ public class nyt implements ActionListener{
                     word[numb][i].setEnabled(false);
 
                 }
+
+            }
                 if(guess.equals(correct)){
+                    game1.setVisible(false);
+                    begin.setVisible(true);
+                    mini[0][0].setEnabled(true);
                     break;
                 }
-            }
+
             numb++;
-            a++;
+            m++;
         }
         }
+
         for(int fi = 0; fi<mini.length; fi++){
             for(int yo = 0; yo<mini[0].length; yo++){
                 if (e.getSource().equals(mini[fi][yo])) {
@@ -506,10 +326,155 @@ public class nyt implements ActionListener{
 
 
                     }
-                    if(!mini[1][0].isEnabled()){
-                        begin.setVisible(false);
-                        game2.setVisible(true);
-                        spellingBee();
+                    if(!mini[1][0].isEnabled()) {
+                        System.out.println(yu);
+                        if (yu == 0) {
+                            bee = new JButton[8][6];
+                            JButton enterButton = new JButton("F               A               B               E               I               L               N");
+
+                            Container enterContainer = new Container();
+                            Container beeContainer = new Container();
+                            enterContainer.setLayout(new GridLayout(1, 1));
+                            beeContainer.setLayout(new GridLayout(8, 6));
+
+                            for (int row = 0; row < bee.length; row++) {
+                                for (int col = 0; col < bee[0].length; col++) {
+                                    bee[row][col] = new JButton();
+                                    bee[row][col].addActionListener(this);
+                                    beeContainer.add(bee[row][col]);
+                                }
+                            }
+
+                            enterButton.addActionListener(this);
+                            enterContainer.add(enterButton);
+
+                            game2.add(enterContainer, BorderLayout.NORTH);
+                            game2.add(beeContainer, BorderLayout.CENTER);
+                            game2.add(betaContainer, BorderLayout.SOUTH);
+
+                            bee[7][5].setText("Score: " + score);
+                            bee[7][5].setEnabled(false);
+                            game2.setVisible(true);
+
+                        }
+
+                        if (yu == 1) {
+                            bee = new JButton[6][4];
+                            JButton enterButton = new JButton("R               G               N               O               P               U               W");
+
+                            Container enterContainer = new Container();
+                            Container beeContainer = new Container();
+                            enterContainer.setLayout(new GridLayout(1, 1));
+                            beeContainer.setLayout(new GridLayout(6, 4));
+
+                            for (int row = 0; row < bee.length; row++) {
+                                for (int col = 0; col < bee[0].length; col++) {
+                                    bee[row][col] = new JButton();
+                                    bee[row][col].addActionListener(this);
+                                    beeContainer.add(bee[row][col]);
+
+                                }
+
+                            }
+
+                            enterButton.addActionListener(this);
+                            enterContainer.add(enterButton);
+
+                            game2.add(enterContainer, BorderLayout.NORTH);
+                            game2.add(beeContainer, BorderLayout.CENTER);
+                            game2.add(betaContainer, BorderLayout.SOUTH);
+                            System.out.println("Uh?");
+                            bee[5][3].setText("Score: " + score);
+                            bee[5][3].setEnabled(false);
+                            game2.setVisible(true);
+                        }
+
+
+
+                            String gu = "";
+                            ArrayList<String> guesser = new ArrayList<String>();
+                            while (game.get(yu).getArray().length > 0 && !gu.equals("QUIT") && guesser.size() != game.get(yu).getArray().length) {
+                                if (s.equals("enter")) {
+                                    gu = g2.getText();
+                                    gu = gu.toUpperCase();
+                                    g2.setText("");
+                                    int a = 0;
+                                    int b = 0;
+                                    System.out.println(gu);
+                                    for (int i = 0; i < game.get(yu).getArray().length; i++) {
+                                        System.out.println(i);
+                                        if (gu.equals(game.get(yu).getArray()[i]) && !guesser.contains(gu)) {
+                                            a = 1;
+                                            b = i;
+
+                                        }
+                                    }
+
+                                    if (a == 1) {
+                                        int r = 0;
+                                        int c = 0;
+                                        score = score + game.get(yu).getArray()[b].length();
+                                        guesser.add(gu);
+                                        if (yu == 0) {
+                                            r = (int) (Math.random() * 8);
+                                            c = (int) (Math.random() * 6);
+                                        }
+                                        if (yu == 1) {
+                                            r = (int) (Math.random() * 6);
+                                            c = (int) (Math.random() * 4);
+                                        }
+                                        if (bee[r][c].isEnabled()) {
+                                            bee[r][c].setText(gu);
+                                            bee[r][c].setEnabled(false);
+                                            if (yu == 0) {
+                                                bee[7][5].setText("Score: " + score);
+                                                bee[7][5].setEnabled(false);
+                                            }
+                                            if (yu == 1) {
+                                                bee[5][3].setText("Score: " + score);
+                                                bee[5][3].setEnabled(false);
+                                            }
+                                        } else {
+                                            while (!bee[r][c].isEnabled()) {
+                                                if (yu == 0) {
+                                                    r = (int) (Math.random() * 8);
+                                                    c = (int) (Math.random() * 6);
+                                                }
+                                                if (yu == 1) {
+                                                    r = (int) (Math.random() * 6);
+                                                    c = (int) (Math.random() * 4);
+                                                }
+                                            }
+                                            bee[r][c].setText(gu);
+                                            bee[r][c].setEnabled(false);
+                                            if (yu == 0) {
+                                                bee[7][5].setText("Score: " + score);
+                                                bee[7][5].setEnabled(false);
+                                            }
+                                            if (yu == 1) {
+                                                bee[5][3].setText("Score: " + score);
+                                                bee[5][3].setEnabled(false);
+                                            }
+
+                                        }
+
+                                    } else if (guesser.contains(gu)) {
+                                        System.out.println("Word has already been used. Try again.");
+                                    } else if (a == 0 && !gu.equals("QUIT")) {
+                                        System.out.println("Not an eligible word. Try again.");
+                                    }
+                                    if (gu.equals("QUIT")) {
+                                        System.out.println("Better luck next time!");
+                                    }
+
+                                    if (guesser.size() == game.get(yu).getArray().length) {
+                                        System.out.println("You have found all the possible words!");
+                                    }
+
+                                }
+                            }
+
+
                     }
                     if(!mini[2][0].isEnabled()){
                         begin.setVisible(false);
